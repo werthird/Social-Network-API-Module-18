@@ -20,6 +20,7 @@ module.exports = {
   async getSingleUser(req, res) {
     try {
       const user = await User.findOne({ _id: req.params.userId })
+        .select('-__v')
         .populate('thoughts');
 
       if (!user) {
