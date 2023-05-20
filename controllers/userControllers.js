@@ -45,10 +45,32 @@ module.exports = {
   // CREATE NEW USER
   async createUser(req, res) {
     try {
-      const user = await User.create(req.body)
-        .select('-__v');
+      const user = await User.create(req.body);
 
       res.status(200).json(user);
+
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json(err);
+    }
+  },
+
+
+  //===========================================================
+  // UPDATE USER EMAIL
+  async updateUserEmail(req, res) {
+    try {
+      const user = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $set: { email: req.body.email } },
+        { new: true }
+      );
+
+      if (!user) {
+        res.status(404).json({ message: 'No user with that ID' });
+      };
+
+      res.status(200).json({ user, message: 'User email updated' });
 
     } catch (err) {
       console.log(err.message);
