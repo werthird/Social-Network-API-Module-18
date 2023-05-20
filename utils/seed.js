@@ -30,10 +30,10 @@ db.once('open', async () => {
   // Create empty array to hold thoughts
   const thoughts = [];
   // Foreach username, build an object with username and email, and send it into the users array
-  thought.forEach((thought, index) => {
+  thought.forEach((thoughtText, index) => {
     thoughts.push(
       {
-        thoughtText: thought,
+        thoughtText: thoughtText,
         username: usernames[index],
       },
     );
