@@ -1,29 +1,28 @@
 Routes:
 
 /api/users
-  /     - GET all users
-  /:id  - GET a single user by _id and populate thought and friend data
-  /     - POST a new user
-  /:id  - PUT a user by _id
-  /:id  - DELETE a user by _id
+  """"""/     - GET all users""""""
+  """"""/:id  - GET a single user by _id and populate thought and friend data""""""
+  """"""/     - POST a new user""""""
+  /:id  - PUT update a user by _id
+  """"""/:id  - DELETE a user by _id""""""
 
   == Find a way to remove a users thoughts when they are deleted ==
 
 
 /api/users/:userId/friends/:friendId
-  /     - POST to add a new friend to the users friend list
+  /     - POST a new friend to the users friend list
   /     - DELETE to remove a friend from a users friend list
 
 
 /api/thoughts 
-  /     - GET all thoughts
-  /:id  - GET single thought by _id
-  /     - POST a new thought ( make sure to push the created thoughs _id to the users thoughts array )
-  /:id  - PUT to update a thought by _id
-  /:id  - DELETE a thought by its _id
+  """"""/     - GET all thoughts""""""
+  """"""/:id  - GET single thought by _id""""""
+  """"""/     - POST a new thought ( make sure to push the created thoughts _id to the users thoughts array )""""""
+  /:id  - PUT update to update a thought by _id
+  """"""/:id  - DELETE a thought by its _id""""""
 
 
 /api/thoughts/:thoughtId/reactions
   /     - POST a new reaction stored in a single thoughts reactions array
   /     - DELETE to pull and remove a reaction by the reactions reactionId value
-

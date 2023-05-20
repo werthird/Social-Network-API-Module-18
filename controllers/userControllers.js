@@ -1,7 +1,8 @@
 const { ObjectId } = require('mongoose').Types;
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 module.exports = {
+
 
   //===========================================================
   // GET ALL USERS
@@ -16,6 +17,7 @@ module.exports = {
       return res.status(500).json(err);
     };
   },
+
 
   //===========================================================
   // GET ONE USER BY ID
@@ -38,6 +40,7 @@ module.exports = {
     };
   },
 
+
   //===========================================================
   // CREATE NEW USER
   async createUser(req, res) {
@@ -46,12 +49,36 @@ module.exports = {
         .select('-__v');
 
       res.status(200).json(user);
-      
+
     } catch (err) {
       console.log(err.message);
       return res.status(500).json(err);
     }
   },
 
+
+  //===========================================================
+  // DELETE USER
+  async deleteUser(req, res) {
+    try {
+      const user = await User.findOneAndDelete({ _id: req.params.userId });
+
+      if (!user) {
+        res.status(404).json({ message: 'No user with that ID' });
+      };
+
+      const thought = await Thought.deleteMany({ username: user.username });
+
+      if (!thought) {
+        res.status(404).json({ message: 'User deleted, no thoughts to delete' });
+      };
+
+      res.status(200).json({ message: 'User and associated thoughts deleted' });
+
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json(err);
+    };
+  },
 
 };
