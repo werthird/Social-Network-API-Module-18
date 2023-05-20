@@ -31,11 +31,21 @@ db.once('open', async () => {
     userData.push({ 
       username: username, 
       email: emails[index],
-      thoughts: thoughts[index]._id
+      thoughts: thoughts[index]._id,
     });
   });
   // Insert users into db
   const users = await User.insertMany(userData);
+
+
+  // Give users random friends
+  users.forEach((user) => {
+    const randomUserIndex = Math.floor(Math.random() * users.length);
+    const randomUser = users[randomUserIndex]._id;
+    user.friends = randomUser;
+  });
+
+  await Promise.all(users.map(user => user.save()));
 
 
   console.log(users);

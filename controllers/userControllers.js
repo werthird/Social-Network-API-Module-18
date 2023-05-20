@@ -3,6 +3,7 @@ const { User } = require('../models');
 
 module.exports = {
 
+  //===========================================================
   // GET ALL USERS
   async getUsers(req, res) {
     try {
@@ -16,12 +17,14 @@ module.exports = {
     };
   },
 
+  //===========================================================
   // GET ONE USER BY ID
   async getSingleUser(req, res) {
     try {
       const user = await User.findOne({ _id: req.params.userId })
         .select('-__v')
-        .populate('thoughts');
+        .populate('thoughts')
+        .populate('friends')
 
       if (!user) {
         return res.status(404).json({ message: 'No user with that ID' });
@@ -33,6 +36,22 @@ module.exports = {
       console.log(err.message);
       return res.status(500).json(err);
     };
-  }
+  },
+
+  //===========================================================
+  // CREATE NEW USER
+  async createUser(req, res) {
+    try {
+      const user = await User.create(req.body)
+        .select('-__v');
+
+      res.status(200).json(user);
+      
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json(err);
+    }
+  },
+
 
 };

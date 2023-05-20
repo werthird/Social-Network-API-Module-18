@@ -1,8 +1,9 @@
 const { ObjectId } = require('mongoose').Types;
-const { Thought } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
 
+  //===========================================================
   // GET ALL THOUGHTS
   async getThoughts(req, res) {
     try {
@@ -15,6 +16,8 @@ module.exports = {
     };
   },
 
+
+  //===========================================================
   // GET ONE THOUGHT BY ID
   async getSingleThought(req, res) {
     try {
@@ -30,5 +33,29 @@ module.exports = {
       console.log(err.message);
       return res.status(500).json(err);
     };
-  }
+  },
+
+
+  //===========================================================
+  // CREATE NEW THOUGHT
+  async createThought(req, res) {
+    try {
+      const thought = await Thought.create(req.body);
+      const user = await User.findOneAndUpdate(
+         { _id: req.body.userId },
+         { $addToSet: { thoughts: thought._id } },
+         { new: true }
+      );
+
+      if (!user) {
+        return res.status(404).json({ message: 'Thought created, but no user with that ID' });
+      };
+
+      res.status(200).json('Created Post');
+      
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json(err);
+    }
+  },
 };
