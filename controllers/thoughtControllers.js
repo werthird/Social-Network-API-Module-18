@@ -54,7 +54,7 @@ module.exports = {
         return res.status(404).json({ message: 'Thought created, but no user with that ID' });
       };
 
-      res.status(200).json('Created Post');
+      res.status(200).json({ thought, message: 'Created Thought' });
       
     } catch (err) {
       console.log(err.message);

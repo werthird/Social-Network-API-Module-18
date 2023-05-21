@@ -47,7 +47,7 @@ module.exports = {
     try {
       const user = await User.create(req.body);
 
-      res.status(200).json(user);
+      res.status(200).json({ user, message: 'User Created' });
 
     } catch (err) {
       console.log(err.message);
