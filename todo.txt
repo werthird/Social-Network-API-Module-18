@@ -11,8 +11,8 @@ Routes:
 
 
 /api/users/:userId/friends/:friendId
-  /     - POST a new friend to the users friend list
-  /     - DELETE to remove a friend from a users friend list
+  """"""/     - POST a new friend to the users friend list""""""
+  """"""/     - DELETE to remove a friend from a users friend list""""""
 
 
 /api/thoughts 
@@ -26,6 +26,8 @@ Routes:
 /api/thoughts/:thoughtId/reactions
   /     - POST a new reaction stored in a single thoughts reactions array
   /     - DELETE to pull and remove a reaction by the reactions reactionId value
+
+  reaction should basically be treated like a comment. It has a specific user who created the reaction, and it has a thought that the reaction is created for.
 
 
 

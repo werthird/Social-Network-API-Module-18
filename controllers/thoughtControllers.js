@@ -111,4 +111,48 @@ module.exports = {
   },
 
 
+  //===========================================================
+  // CREATE REACTION
+  async createReaction(req, res) {
+    try {
+      const thought = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $addToSet: { reactions: req.body } },
+        { new: true }
+      );
+
+      if (!thought) {
+        res.status(404).json({ message: 'No thought by that ID' });
+      };
+
+      res.status(200).json({ thought, message: 'Reaction created' });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json(err);
+    };
+  },
+
+
+  //===========================================================
+  // DELETE REACTION
+  async deleteReaction(req, res) {
+    try {
+      const thought = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $pull: { reactions: { _id: req.params.reactionId } } },
+        { new: true }
+      );
+
+      if (!thought) {
+        res.status(404).json({ message: 'No thought by that ID' });
+      };
+
+      res.status(200).json({ message: 'Reaction deleted' });
+
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json(err);
+    };
+  },
+
 }; 
